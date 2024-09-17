@@ -21,6 +21,8 @@ os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
+# Prompt
+
 def get_conversational_chain():
     prompt_template = """
     If someone gives you the offence or felony that they have commited so please provide them with the information on - what are the sections under the indian penal code and other provided documents 
