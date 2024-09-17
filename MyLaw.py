@@ -21,7 +21,7 @@ os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
-# Prompt
+# new feature
 
 def get_conversational_chain():
     prompt_template = """
