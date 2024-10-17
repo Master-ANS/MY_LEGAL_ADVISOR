@@ -72,18 +72,35 @@ def user_input(user_question):
     response = chain(
         {"input_documents":docs, "question":user_question},
         return_only_outputs=True)
-    print(response)
-    st.write("Reply: " , response["output_text"])
+    return response["output_text"]
 
 
 def main():
-    st.set_page_config("Chat withh lawyer 👩🏻‍⚖️")
+    st.set_page_config("Chat with Lawyer 👩🏻‍⚖️")
     st.header("Chat with Lawyer")
 
-    user_question = st.text_input("Ask about your legal matters with out AI Lawyer")
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    if user_question:
-        user_input(user_question)
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # React to user input
+    if prompt := st.chat_input("Ask about your legal matters with our AI Lawyer"):
+        # Display user message in chat message container
+        st.chat_message("user").markdown(prompt)
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
+        response = user_input(prompt)
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            st.markdown(response)
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
 if __name__ == "__main__":
     main()
